@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMBAR WETAN: Jejak Cerita di Balik Relief</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #1C1917;
+            --bg-card: #292524;
+            --accent: #CA8A04;
+            --cream: #FEF3C7;
+            --text-main: #F5F5F4;
+            --text-muted: #A8A29E;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: rgba(28, 25, 23, 0.95);
+            border-bottom: 1px solid rgba(202, 138, 4, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        main {
+            flex: 1;
+            padding: 1.5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* INI KUNCI UTAMA: Menyembunyikan section yang tidak aktif */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, rgba(120, 53, 15, 0.2), rgba(20, 83, 45, 0.2));
+            border: 1px solid rgba(202, 138, 4, 0.3);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--cream);
+            margin-bottom: 0.8rem;
+        }
+
+        .hero p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .card-menu {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .card-menu h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .card-menu p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        h2.section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--cream);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.3rem;
+            display: inline-block;
+        }
+
+        .content-box {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--bg-card);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">🏛️ GAMBAR WETAN</div>
+                <nav>
+            <ul>
+                <li><a href="#" onclick="switchView('beranda')">Beranda</a></li>
+                <li><a href="#" onclick="switchView('pengetahuan-umum')">Pengetahuan Umum</a></li>
+                <li><a href="#" onclick="switchView('kenali')">Kenali</a></li>
+                <li><a href="#" onclick="switchView('eksplorasi')">Eksplorasi</a></li>
+                <li><a href="#" onclick="switchView('cerita')">Cerita</a></li>
+                <li><a href="#" onclick="switchView('quiz')">Quiz</a></li>
+                <li><a href="#" onclick="switchView('galeri')" id="nav-galeri">Galeri</a></li>
+            </ul>
+
+            </ul>
+        </nav>
+        </>
+    </header>
+                    <!-- 1. BERANDA -->
+        <section id="beranda" class="view-section active">
+            <div class="hero">
+                <h1>GAMBAR WETAN</h1>
+                <p>“Setiap relief menyimpan cerita. Setiap cerita menyimpan sejarah.”</p>
+                <button class="btn-primary" onclick="switchView('explorer')">MULAI MENJELAJAH</button>
+            </div>
+          
+            <!-- GUNAKAN DIV GRID-MENU DI SINI -->
+            <div class="grid-menu">
+                <div class="card-menu" onclick="switchView('pengetahuan-umum')">
+                    <h3>🏛️ Pengetahuan Umum</h3>
+                    <p>Sekilas informasi, fungsi, dan struktur bangunan candi.</p>
+                </div>
+          
+                <div class="card-menu" onclick="switchView('kenali')">
+                    <h3>📖 Kenali</h3>
+                    <p>sejarah Candi Gambar Wetan.</p>
+                </div>
+          
+                <div class="card-menu" onclick="switchView('explorer')">
+                    <h3>🔎 Eksplorasi</h3>
+                    <p>Menjelajahi relief interaktif candi.</p>
+                </div>
+          
+                <div class="card-menu" onclick="switchView('cerita')">
+                    <h3>🎭 Cerita</h3>
+                    <p>Komik sejarah interaktif di balik relief.</p>
+                </div>
+          
+                <div class="card-menu" onclick="switchView('quiz')">
+                    <h3>🎮 Quiz</h3>
+                    <p>Uji pemahamanmu lewat kuis seru.</p>
+                </div>
+          
+                <div class="card-menu" onclick="switchView('galeri')">
+                    <h3>🖼️ Galeri</h3>
+                    <p>Kumpulan foto dan panil relief candi.</p>
+                </div>
+            </div><!-- AKHIR DARI GRID-MENU -->
+          
+        </section>
+
+          
+        </section>
+        <!-- 1. PENGETAHUAN UMUM -->
+        <section id="pengetahuan-umum" class="view-section">
+            <h2 class="section-title">Pengetahuan Umum Candi</h2>
+            
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Apa Itu Candi? (Asal-Usul & Pengertian)</h3>
+                <p style="margin-bottom: 0.8rem;">Di Indonesia, istilah <strong>candi</strong> merujuk pada bangunan suci peninggalan masa Hindu-Buddha (masa sejarah klasik Nusantara, terutama abad ke-8 hingga ke-15 Masehi). Kata "candi" sendiri diduga berasal dari salah satu nama untuk Dewi Durga, yaitu <em>Candika</em> (dewi kematian atau dewi pelebur), yang menyiratkan bahwa banyak candi pada mulanya didirikan untuk memuliakan raja atau tokoh besar yang telah wafat (fungsi pendharmaan atau makam simbolis), bukan sekadar tempat ibadah biasa.</p>
+            </div>
+
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Fungsi Utama Candi dalam Masyarakat Kuno</h3>
+                <p style="margin-bottom: 0.5rem;">Dalam peradaban Nusantara masa lampau, candi memiliki berbagai fungsi penting:</p>
+                <ul style="margin-left: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.8rem;">
+                    <li><strong>Tempat Pemujaan:</strong> Tempat para pendeta dan umat memuja para dewa (seperti Trimurti dalam Hindu atau Buddha Gautama/Bodhisatwa dalam Buddha).</li>
+                    <li><strong>Pendharmaan (Shrine):</strong> Tempat memuja arwah raja atau penguasa yang telah meninggal agar rohnya menyatu dengan dewa penitisnya. Abu jenazah atau pripih (lambang zat jasmaniah) biasanya ditanam di bawah lantai candi utama.</li>
+                    <li><strong>Pusat Pendidikan & Spiritual:</strong> Kompleks candi sering kali berfungsi sebagai asrama atau tempat pertapaan para resi dan brahmana untuk mempelajari kitab suci.</li>
+                </ul>
+            </div>
+
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Struktur Vertikal & Kosmologi Candi</h3>
+                <p style="margin-bottom: 0.5rem;">Secara arsitektural, bangunan candi dirancang berdasarkan konsep kosmologi keagamaan yang membagi alam semesta menjadi tiga tingkat vertikal (makrokosmos dan mikrokosmos):</p>
+                <ul style="margin-left: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+                    <li><strong>Kaki Candi (Bhurloka):</strong> Melambangkan alam bawah atau dunia manusia biasa, tempat di mana hawa nafsu, keterikatan duniawi, dan sifat-sifat rendah masih mendominasi. Sering dihiasi relief flora, fauna, atau makhluk mitologi.</li>
+                    <li><strong>Tubuh Candi (Bhuvarloka):</strong> Melambangkan alam tengah atau dunia pembersihan jiwa (antara manusia dan para dewa). Di ruang utama (garbhagriha) terdapat arca suci, dan dinding luarnya dihiasi relief naratif kisah moral serta epos keagamaan.</li>
+                    <li><strong>Atap Candi (Svarloka):</strong> Melambangkan alam atas atau tempat para dewa dan jiwa yang telah suci mencapai keabadian (nirwana/surga). Biasanya berbentuk bertingkat dengan kemuncak berupa stupa, ratna, atau amreta.</li>
+                </ul>
+            </div>
+
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Bahan Bangunan & Ragam Gaya (Gaya Jawa Tengah vs Jawa Timur)</h3>
+                <p style="margin-bottom: 0.8rem;">Candi di Indonesia dibangun menggunakan batu andesit (vulkanik), batu bata merah, atau batu tufa. Berdasarkan letak geografis dan periodenya, arsitektur candi dikelompokkan menjadi dua gaya utama:</p>
+                <ul style="margin-left: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+                    <li><strong>Gaya Jawa Tengah (Abad ke-8 s.d. 10):</strong> Ciri-cirinya berbentuk tambun, atap berundak simetris dengan stupa/ratna yang jelas, menghadap ke timur, menggunakan batu andesit, dan reliefnya dipahat secara naturalis (timbul menonjol). Contoh: Candi Borobudur dan Prambanan.</li>
+                    <li><strong>Gaya Jawa Timur (Abad ke-11 s.d. 15):</strong> Ciri-cirinya cenderung langsing, atap bagian atas lebih ditekankan pada tingkat puncaknya, menggunakan bata merah atau kombinasi batu, menghadap ke barat, dan reliefnya bergaya pewayangan (stilisasi dua dimensi). Termasuk dalam gaya ini adalah situs-situs peninggalan Majapahit seperti <strong>Candi Gambar Wetan</strong>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2.                 <!-- 2. KENALI / PENGERTIAN -->
+        <section id="kenali" class="view-section">
+            <h2 class="section-title">Mengenal Candi Gambar Wetan</h2>
+            
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Situs Sejarah di Lereng Gunung Kelud</h3>
+                <p>Candi Gambar Wetan merupakan salah satu situs cagar budaya peninggalan masa Majapahit yang terletak di Dusun Gambar, Desa Sumberasri, Kecamatan Nglegok, Kabupaten Blitar, Jawa Timur. Berada di kawasan lereng Gunung Kelud sekitar aliran Sungai Bladak, situs ini memiliki karakter lingkungan perbukitan dan perkebunan yang asri, berbeda dari kompleks percandian di perkotaan.</p>
+            </div>
+
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Pertanggalan & Arsitektur Unik</h3>
+                <p>Berdasarkan angka tahun pada lapik dua arca dwarapala (1260 Ç / 1338 M dan 1293 Ç / 1371 M), candi ini diperkirakan berkaitan dengan masa pemerintahan Raja Majapahit Tribhuwana Tunggadewi hingga Hayam Wuruk. Kompleks candi terbagi menjadi tiga halaman berundak ke arah belakang, di mana halaman ketiga terdapat candi induk berupa batur berukuran sekitar 4 × 5,5 meter.</p>
+            </div>
+
+            <div class="content-box" style="margin-left: 0; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Pusat Narasi Relief</h3>
+                <p>Selain struktur bangunannya yang unik, Candi Gambar Wetan menyimpan relief naratif yang sangat penting, salah satunya adalah kisah legendaris <strong>Bubuksah-Gagangaking</strong>. Relief ini terpahat dalam rangkaian adegan yang menyampaikan nilai moral, spiritual, dan filosofi kehidupan masyarakat Jawa Kuna.</p>
+            </div>
+        </section>
+
+        <section id="kenali" class="view-section">
+            <h2 class="section-title">Mengenal Candi Gambar Wetan</h2>
+            
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Situs Sejarah di Lereng Gunung Kelud</h3>
+                <p>Candi Gambar Wetan merupakan salah satu situs cagar budaya peninggalan masa Majapahit yang terletak di Dusun Gambar, Desa Sumberasri, Kecamatan Nglegok, Kabupaten Blitar, Jawa Timur[span_0](start_span)[span_0](end_span). Berada di kawasan lereng Gunung Kelud sekitar aliran Sungai Bladak, situs ini memiliki karakter lingkungan perbukitan dan perkebunan yang asri, berbeda dari kompleks percandian di perkotaan[span_1](start_span)[span_1](end_span).</p>
+            </div>
+
+            <div class="content-box" style="margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Pertanggalan & Arsitektur Unik</h3>
+                <p>Berdasarkan angka tahun pada lapik dua arca dwarapala (1260 Ç / 1338 M dan 1293 Ç / 1371 M), candi ini diperkirakan berkaitan dengan masa pemerintahan Raja Majapahit Tribhuwana Tunggadewi hingga Hayam Wuruk[span_2](start_span)[span_2](end_span). Kompleks candi terbagi menjadi tiga halaman berundak ke arah belakang, di mana halaman ketiga terdapat candi induk berupa batur berukuran sekitar 4 × 5,5 meter[span_3](start_span)[span_3](end_span).</p>
+            </div>
+
+            <div class="content-box" style="margin-left: 0; border-left: 4px solid var(--accent);">
+                <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Pusat Narasi Relief</h3>
+                <p>Selain struktur bangunannya yang unik, Candi Gambar Wetan menyimpan relief naratif yang sangat penting, salah satunya adalah kisah legendaris <strong>Bubuksah-Gagangaking</strong>[span_4](start_span)[span_4](end_span). Relief ini terpahat dalam rangkaian adegan yang menyampaikan nilai moral, spiritual, dan filosofi kehidupan masyarakat Jawa Kuna[span_5](start_span)[span_5](end_span).</p>
+            </div>
+        </section>
+
+        <section id="kenali" class="view-section">
+            <h2 class="section-title">Kenali Candi Gambar Wetan</h2>
+            <div class="content-box">
+                <p>Candi Gambar Wetan adalah warisan sejarah penting peninggalan masa Jawa Kuna di lereng gunung. Bagian ini memuat latar belakang, fungsi, dan struktur bangunan candi.</p>
+            </div>
+        </section>
+
+        <!-- 3. EKSPLORASI -->
+        <section id="explorer" class="view-section">
+            <h2 class="section-title">Relief Explorer</h2>
+            <div class="content-box">
+                <p>Pilih titik bagian relief pada Candi Gambar Wetan untuk melihat detail tokoh, adegan, dan penjelasan audio.</p>
+            </div>
+        </section>
+
+              <!-- 4. CERITA -->
+        <section id="cerita" class="view-section">
+            <h2 class="section-title">Jejak yang Terukir: Komik Interaktif</h2>
+            
+            <div style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+                <p>Ikuti alur cerita berbasis relief Bubuksah-Gagangaking dari masa awal kehidupan hingga akhir perjalanan spiritual mereka.</p>
+            </div>
+
+            <!-- Panel 1 & 2 -->
+            <div class="content-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent);">
+                <span style="background: var(--accent); color: var(--bg-dark); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PANIL 1 & 2</span>
+                <h3 style="color: var(--cream); margin: 0.5rem 0 0.3rem 0; font-family: 'Playfair Display', serif;">Kehidupan Awal (Sebelum Menjadi Pertapa)</h3>
+                <p>Dahulu kala di lereng Gunung Wilis—yang dalam naskah kuno sering disebut Gunung Gending—hidup dua orang bersaudara yang rukun, yaitu sang kakak bernama Bubuksah yang berbadan besar dan adiknya bernama Gagang Aking yang berpostur kurus. Pada awalnya, kehidupan mereka jauh dari kata spiritual. Setiap hari, mereka menghabiskan waktu berburu di dalam hutan lebat menggunakan jerat tali (jala/jaring) serta <em>gala</em> (tongkat kayu berpahat tajam atau sumpit) untuk menangkap hewan seperti kijang dan babi hutan. Setelah mendapatkan hasil buruan, mereka membawa hewan-hewan tersebut dengan cara dipikul bersama menggunakan sebatang bambu atau kayu untuk dibawa pulang.</p>
+            </div>
+
+            <!-- Panel 3 & 4 -->
+            <div class="content-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent);">
+                <span style="background: var(--accent); color: var(--bg-dark); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PANIL 3 & 4</span>
+                <h3 style="color: var(--cream); margin: 0.5rem 0 0.3rem 0; font-family: 'Playfair Display', serif;">Hijrah ke Dunia Religius (Memilih Jalan Hidup)</h3>
+                <p>Seiring berjalannya waktu, hati kakak beradik ini terketuk untuk "berhijrah" mendalami ilmu kehidupan dan berguru kepada seorang resi demi mencari kesempurnaan hidup. Uniknya, meski masuk ke dunia religi, mereka tetap membawa karakter aslinya masing-masing. Bubuksah tetap menjalani hidup dengan santai dan apa adanya—ia memakan apa saja yang ada di sekitarnya tanpa pilih-pilih, membuat tubuhnya semakin gemuk dan sehat. Sebaliknya, Gagang Aking menempuh jalan spiritual yang kontras dengan memperbanyak puasa dan menahan diri dari segala makanan, hingga tubuhnya menjadi kurus kering. Mereka bertapa di gua tepi sungai yang saling berhadapan; Bubuksah di sisi timur menghadap ke barat, dan Gagang Aking di sisi barat menghadap ke timur.</p>
+            </div>
+
+            <!-- Panel 5 & 6 -->
+            <div class="content-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent);">
+                <span style="background: var(--accent); color: var(--bg-dark); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PANIL 5 & 6</span>
+                <h3 style="color: var(--cream); margin: 0.5rem 0 0.3rem 0; font-family: 'Playfair Display', serif;">Ujian dari Sang Guru / Para Dewa</h3>
+                <p>Cara hidup pertapaan mereka yang ekstrem ini akhirnya mencuri perhatian para dewa. Dewa Indra melaporkannya kepada Dewa Siwa, yang kemudian mengutus Sang Kalawijaya turun ke bumi untuk menguji mereka dengan menjelma menjadi seekor harimau putih yang besar. Harimau itu mendatangi Gagang Aking terlebih dahulu dan meminta dagingnya untuk obat. Karena takut dan masih terikat ego, Gagang Aking menolak dan justru menyuruh harimau itu memakan kakaknya di seberang sungai. Sebaliknya, saat harimau itu mendatangi Bubuksah dan menyampaikan permintaan yang sama, Bubuksah dengan ikhlas dan tanpa pamrih mempersilakan harimau tersebut menyantap tubuhnya demi menolong makhluk yang kelaparan.</p>
+            </div>
+
+            <!-- Panel 7 -->
+            <div class="content-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent);">
+                <span style="background: var(--accent); color: var(--bg-dark); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PANIL 7</span>
+                <h3 style="color: var(--cream); margin: 0.5rem 0 0.3rem 0; font-family: 'Playfair Display', serif;">Puncak Cerita (Penjemputan ke Swargaloka)</h3>
+                <p>Melihat ketulusan dan penyerahan diri Bubuksah yang begitu total kepada Kuasa Alam, harimau putih akhirnya menampakkan wujud aslinya sebagai Sang Kalawijaya. Sebagai ganjaran atas ketulusan hati mereka, kedua bersaudara ini diantar naik menuju surga (Swargaloka). Bubuksah yang ikhlas dan tanpa pamrih duduk dengan tenang di atas punggung harimau putih sebagai simbol jiwa yang selamat, sementara Gagang Aking yang hatinya masih diikat oleh keraguan dan ego harus bergelantungan memegang ekor harimau tersebut.</p>
+            </div>
+
+            <!-- Panel 8 -->
+            <div class="content-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent);">
+                <span style="background: var(--accent); color: var(--bg-dark); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PANIL 8</span>
+                <h3 style="color: var(--cream); margin: 0.5rem 0 0.3rem 0; font-family: 'Playfair Display', serif;">Kebahagiaan di Surga</h3>
+                <p>Setibanya di alam keabadian Swargaloka, petualangan mereka pun berbuah manis. Bubuksah dapat menikmati kehidupannya di surga dengan penuh suka cita, di mana ia bisa dengan bebas menikmati berbagai hidangan lezat sepuas hatinya atau melakukan aksi <em>mukbang</em> di surga sebagai ganjaran atas kelapangan hatinya selama di dunia.</p>
+            </div>
+        </section>
+
+        <section id="cerita"class="view-section">
+            <h2 class="section-title">Cerita Komik Interaktif</h2>
+            <div class="content-box">
+                <p>Ikuti alur cerita berbasis relief Bubuksah-Gagangaking langkah demi langkah.</p>
+            </div>
+        </section>
+
+        <!-- 5. QUIZ -->
+        <section id="quiz" class="view-section">
+            <h2 class="section-title">Tantangan & Quiz</h2>
+            <div class="content-box">
+                <p>Jawab pertanyaan seputar sejarah dan relief untuk mendapatkan badge penjelajah.</p>
+            </div>
+        </section>
+
+        <!-- 6. GALERI -->
+        <section id="galeri" class="view-section">
+            <h2 class="section-title"<div style="display: flex; flex-direction: column; gap: 1rem;">
+    <!-- Kotak untuk Foto 1 -->
+    <div style="text-align: center;">
+        <img src="foto1.jpg" alt="Foto Candi" style="width: 100%; border-radius: 8px; max-height: 200px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem;">Suasana Candi Gambar Wetan</p>
+    </div>
+</div>
+
+            <div class="content-box">
+                <p><div style="display: flex; flex-direction: column; gap: 1rem;">
+    <!-- Foto Panil 1 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 1 jpg.jpg" alt="Panil 1" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 1: Kehidupan awal sebelum pertapaan</p>
+    </div>
+
+    <!-- Foto Panil 2 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 2.jpg" alt="Panil 2" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 2: Membawa hasil buruan</p>
+    </div>
+                    <!-- Foto Panil 3 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 3.jpg" alt="Panil 3" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 3: Berdiskusi memasuki pertapaan</p>
+    </div>
+
+    <!-- Foto Panil 4 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 4.jpg" alt="Panil 4" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 4: Berpisah karena perbedaan jalan hidup</p>
+    </div>
+      <!-- Foto Panil 5 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 5.jpg" alt="Panil 5" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 5: Kalawijaya menguji Gagangaking</p>
+    </div>
+
+    <!-- Foto Panil 6 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 6.jpg" alt="Panil 6" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 6: Kalawijaya menguji Bubuksah</p>
+    </div>
+    <!-- Foto Panil 7 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 7.jpg" alt="Panil 7" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 7: Perjalanan menuju nirwana bersama Kalawijaya</p>
+    </div>
+
+    <!-- Foto Panil 8 -->
+    <div style="text-align: center;">
+        <img src="Gambar candi/Panil 8.jpg" alt="Panil 8" style="width: 100%; border-radius: 8px; max-height: 250px; object-fit: cover;">
+        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--text-muted);">Panil 8: Bubuksah mencapai ketenangan di nirwana</p>
+    </div>
+
+</div>
+</p>
+            </div>
+        </section>
+
+        <!-- 7. REFERENSI -->
+        <section id="referensi" class="view-section">
+            <h2 class="section-title">Sumber & Referensi</h2>
+            <div class="content-box">
+                <p>Daftar pustaka akademis, jurnal, dan literatur pendukung.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 LOMBA KARYA TULIS ILMIAH SMAN 1 TALUN</p>
+    </footer>
+
+    <script>
+        function switchView(id) {
+            const sections = document.querySelectorAll('.view-section');
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+
+            const navs = document.querySelectorAll('nav a');
+            for (let j = 0; j < navs.length; j++) {
+                navs[j].classList.remove('active');
+            }
+
+            const targetSec = document.getElementById(id);
+            if (targetSec) {
+                targetSec.classList.add('active');
+            }
+
+            const targetNav = document.getElementById('nav-' + id);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
